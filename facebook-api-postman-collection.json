@@ -1,0 +1,173 @@
+{
+  "info": {
+    "_postman_id": "bf2ffdd6-ffdf-47a1-a33b-abe5d466827d",
+    "name": "Facebook API - Taller Backend",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "58821979",
+    "_collection_link": "https://go.postman.co/collection/58821979-bf2ffdd6-ffdf-47a1-a33b-abe5d466827d?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Crear publicación con imágenes",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "title",
+              "value": "Mi primera publicación",
+              "type": "text"
+            },
+            {
+              "key": "content",
+              "value": "Hola a todos, comparto fotos de mi viaje",
+              "type": "text"
+            },
+            {
+              "key": "images[]",
+              "type": "file",
+              "src": [
+                "/Users/_andres.fb/Downloads/estatua.jpg"
+              ]
+            },
+            {
+              "key": "images[]",
+              "type": "file",
+              "src": [
+                "/Users/_andres.fb/Downloads/bridge.jpg"
+              ]
+            }
+          ]
+        },
+        "url": {
+          "raw": "{{base_url}}/api/posts",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "posts"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Listar publicaciones",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/posts",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "posts"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Agregar Comentario",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"author\": \"Yo mismo\", \"content\": \"¡Qué buenas fotos!\"}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/api/posts/1/comments",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "posts",
+            "1",
+            "comments"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Dar like a publicación",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/posts/1/like",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "posts",
+            "1",
+            "like"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Eliminar publicación",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/posts/1",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "posts",
+            "1"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
