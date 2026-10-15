@@ -13,8 +13,8 @@ class PostController extends Controller
     {
         $posts = Post::with(['user:id,name', 'images', 'comments'])
             ->latest()
-            ->get()
-            ->map(function ($post) {
+            ->paginate(10)
+            ->through(function ($post) {
                 $post->images->transform(function ($img) {
                     $img->image_url = asset('storage/' . $img->image_path);
                     return $img;
