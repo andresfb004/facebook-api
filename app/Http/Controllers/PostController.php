@@ -12,6 +12,7 @@ class PostController extends Controller
     public function index()
     {
         $posts = Post::with(['user:id,name', 'images', 'comments'])
+            ->withCount('likes')
             ->latest()
             ->paginate(10)
             ->through(function ($post) {
@@ -27,11 +28,15 @@ class PostController extends Controller
 
     public function show($id)
     {
-        $post = Post::with(['user:id,name', 'images', 'comments'])->findOrFail($id);
+        $post = Post::with(['user:id,name', 'images', 'comments'])
+            ->withCount('likes')
+            ->findOrFail($id);
+
         $post->images->transform(function ($img) {
             $img->image_url = asset('storage/' . $img->image_path);
             return $img;
         });
+
         return response()->json($post, 200);
     }
 
@@ -61,14 +66,35 @@ class PostController extends Controller
         return response()->json($post->load(['user:id,name', 'images']), 201);
     }
 
-    public function like($id)
+    public function like(Request $request, $id)
     {
         $post = Post::findOrFail($id);
-        $post->increment('likes_count');
+        $user = $request->user();
+
+        if ($post->likes()->where('user_id', $user->id)->exists()) {
+            return response()->json([
+                'message'     => 'Ya le diste me gusta a esta publicación',
+                'likes_count' => $post->likes()->count(),
+            ], 409);
+        }
+
+        $post->likes()->attach($user->id);
 
         return response()->json([
             'message'     => 'Me gusta añadido correctamente',
-            'likes_count' => $post->likes_count,
+            'likes_count' => $post->likes()->count(),
+        ], 200);
+    }
+
+    public function unlike(Request $request, $id)
+    {
+        $post = Post::findOrFail($id);
+
+        $post->likes()->detach($request->user()->id);
+
+        return response()->json([
+            'message'     => 'Me gusta eliminado correctamente',
+            'likes_count' => $post->likes()->count(),
         ], 200);
     }
 
