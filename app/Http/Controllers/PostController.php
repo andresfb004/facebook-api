@@ -11,7 +11,7 @@ class PostController extends Controller
 {
     public function index()
     {
-        $posts = Post::with(['images', 'comments'])
+        $posts = Post::with(['user:id,name', 'images', 'comments'])
             ->latest()
             ->get()
             ->map(function ($post) {
@@ -27,7 +27,7 @@ class PostController extends Controller
 
     public function show($id)
     {
-        $post = Post::with(['images', 'comments'])->findOrFail($id);
+        $post = Post::with(['user:id,name', 'images', 'comments'])->findOrFail($id);
         $post->images->transform(function ($img) {
             $img->image_url = asset('storage/' . $img->image_path);
             return $img;
@@ -43,7 +43,7 @@ class PostController extends Controller
             'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        $post = Post::create([
+        $post = $request->user()->posts()->create([
             'title'   => $request->title,
             'content' => $request->content,
         ]);
@@ -58,7 +58,7 @@ class PostController extends Controller
             }
         }
 
-        return response()->json($post->load('images'), 201);
+        return response()->json($post->load(['user:id,name', 'images']), 201);
     }
 
     public function like($id)
@@ -72,9 +72,15 @@ class PostController extends Controller
         ], 200);
     }
 
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
         $post = Post::findOrFail($id);
+
+        if ($post->user_id !== $request->user()->id) {
+            return response()->json([
+                'message' => 'No puedes eliminar una publicación que no es tuya',
+            ], 403);
+        }
 
         foreach ($post->images as $image) {
             Storage::disk('public')->delete($image->image_path);
