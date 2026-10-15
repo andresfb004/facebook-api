@@ -9,12 +9,19 @@ use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $posts = Post::with(['user:id,name', 'images', 'comments'])
             ->withCount('likes')
+            ->when($request->input('search'), function ($query, $search) {
+                $query->where(function ($query) use ($search) {
+                    $query->where('title', 'like', "%{$search}%")
+                        ->orWhere('content', 'like', "%{$search}%");
+                });
+            })
             ->latest()
             ->paginate(10)
+            ->withQueryString()
             ->through(function ($post) {
                 $post->images->transform(function ($img) {
                     $img->image_url = asset('storage/' . $img->image_path);
