@@ -40,7 +40,7 @@ class NewCommentMail extends Mailable
             markdown: 'mail.new-comment',
             with: [
                 'post' => $this->comment->post()->with('user')->first(),
-                'url'  => url('/api/posts/' . $this->comment->post_id),
+                'url'  => url('/api/v1/posts/' . $this->comment->post_id),
             ],
         );
     }
