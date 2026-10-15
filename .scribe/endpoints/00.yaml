@@ -1,0 +1,267 @@
+name: Autenticación
+description: |-
+
+  Registro, inicio y cierre de sesión. Los endpoints protegidos de la API
+  requieren el token que devuelven el registro o el login.
+endpoints:
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: api/v1/register
+    metadata:
+      custom: []
+      groupName: Autenticación
+      groupDescription: |-
+
+        Registro, inicio y cierre de sesión. Los endpoints protegidos de la API
+        requieren el token que devuelven el registro o el login.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Registrar usuario'
+      description: 'Crea una cuenta nueva y devuelve un token para usar en las rutas protegidas.'
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      name:
+        custom: []
+        name: name
+        description: 'Nombre del usuario.'
+        required: true
+        example: 'Andrés Forero'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      email:
+        custom: []
+        name: email
+        description: 'Correo del usuario. Debe ser único.'
+        required: true
+        example: andres@test.com
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      password:
+        custom: []
+        name: password
+        description: 'Contraseña de mínimo 8 caracteres.'
+        required: true
+        example: password123
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      password_confirmation:
+        custom: []
+        name: password_confirmation
+        description: 'Debe ser igual a password.'
+        required: true
+        example: password123
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      name: 'Andrés Forero'
+      email: andres@test.com
+      password: password123
+      password_confirmation: password123
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 201
+        content: '{"user": {"id": 1, "name": "Andrés Forero", "email": "andres@test.com", "created_at": "2026-10-15T05:42:29.000000Z", "updated_at": "2026-10-15T05:42:29.000000Z"}, "token": "1|y98K2zNG2YIUZ6e2yRIbbOMypLgh3m87tqnsr8GP800a92ef"}'
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 422
+        content: '{"message": "The email has already been taken.", "errors": {"email": ["The email has already been taken."]}}'
+        headers: []
+        description: 'Email ya registrado'
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: api/v1/login
+    metadata:
+      custom: []
+      groupName: Autenticación
+      groupDescription: |-
+
+        Registro, inicio y cierre de sesión. Los endpoints protegidos de la API
+        requieren el token que devuelven el registro o el login.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Iniciar sesión'
+      description: 'Valida el correo y la contraseña y devuelve un token nuevo.'
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      email:
+        custom: []
+        name: email
+        description: 'Correo del usuario.'
+        required: true
+        example: andres@test.com
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      password:
+        custom: []
+        name: password
+        description: 'Contraseña del usuario.'
+        required: true
+        example: password123
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      email: andres@test.com
+      password: password123
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"user": {"id": 1, "name": "Andrés Forero", "email": "andres@test.com", "email_verified_at": null, "created_at": "2026-10-15T05:42:29.000000Z", "updated_at": "2026-10-15T05:42:29.000000Z"}, "token": "2|AJ2TFdxsSS73BINWGOXnmm1zZKQGqMjwGYO2U5CF2e8a7843"}'
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 401
+        content: '{"message": "Credenciales incorrectas"}'
+        headers: []
+        description: 'Credenciales incorrectas'
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: api/v1/logout
+    metadata:
+      custom: []
+      groupName: Autenticación
+      groupDescription: |-
+
+        Registro, inicio y cierre de sesión. Los endpoints protegidos de la API
+        requieren el token que devuelven el registro o el login.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Cerrar sesión'
+      description: 'Elimina el token con el que se hizo la petición. Después hay que volver a iniciar sesión.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {TU_TOKEN}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 204
+        content: ''
+        headers: []
+        description: 'Sesión cerrada'
+      -
+        custom: []
+        status: 401
+        content: '{"message": "Unauthenticated."}'
+        headers: []
+        description: 'Sin token'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: api/v1/user
+    metadata:
+      custom: []
+      groupName: Autenticación
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Usuario autenticado'
+      description: 'Devuelve los datos del usuario dueño del token.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {TU_TOKEN}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"id": 1, "name": "Andrés Forero", "email": "andres@test.com", "email_verified_at": null, "created_at": "2026-10-15T05:42:29.000000Z", "updated_at": "2026-10-15T05:42:29.000000Z"}'
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 401
+        content: '{"message": "Unauthenticated."}'
+        headers: []
+        description: 'Sin token'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null

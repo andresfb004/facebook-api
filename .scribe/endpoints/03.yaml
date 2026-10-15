@@ -1,0 +1,139 @@
+name: Likes
+description: ''
+endpoints:
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: 'api/v1/posts/{id}/like'
+    metadata:
+      custom: []
+      groupName: Likes
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Dar like'
+      description: 'Registra el like del usuario autenticado. Cada usuario puede dar un solo like por publicación.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {TU_TOKEN}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        custom: []
+        name: id
+        description: 'ID de la publicación.'
+        required: true
+        example: 2
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      id: 2
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"message": "Me gusta añadido correctamente", "likes_count": 1}'
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 401
+        content: '{"message": "Unauthenticated."}'
+        headers: []
+        description: 'Sin token'
+      -
+        custom: []
+        status: 404
+        content: '{"message": "No query results for model [App\\Models\\Post] 999"}'
+        headers: []
+        description: 'La publicación no existe'
+      -
+        custom: []
+        status: 409
+        content: '{"message": "Ya le diste me gusta a esta publicación", "likes_count": 1}'
+        headers: []
+        description: 'Ya había dado like'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - DELETE
+    uri: 'api/v1/posts/{id}/like'
+    metadata:
+      custom: []
+      groupName: Likes
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Quitar like'
+      description: 'Elimina el like del usuario autenticado y devuelve la cantidad de likes actualizada.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {TU_TOKEN}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        custom: []
+        name: id
+        description: 'ID de la publicación.'
+        required: true
+        example: 2
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      id: 2
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"message": "Me gusta eliminado correctamente", "likes_count": 0}'
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 401
+        content: '{"message": "Unauthenticated."}'
+        headers: []
+        description: 'Sin token'
+      -
+        custom: []
+        status: 404
+        content: '{"message": "No query results for model [App\\Models\\Post] 999"}'
+        headers: []
+        description: 'La publicación no existe'
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null

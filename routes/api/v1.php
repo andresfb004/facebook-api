@@ -18,6 +18,17 @@ Route::get('/posts/{id}/comments', [CommentController::class, 'index']);
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
 
+    /**
+     * Usuario autenticado
+     *
+     * Devuelve los datos del usuario dueño del token.
+     *
+     * @group Autenticación
+     * @authenticated
+     *
+     * @response 200 {"id": 1, "name": "Andrés Forero", "email": "andres@test.com", "email_verified_at": null, "created_at": "2026-10-15T05:42:29.000000Z", "updated_at": "2026-10-15T05:42:29.000000Z"}
+     * @response 401 scenario="Sin token" {"message": "Unauthenticated."}
+     */
     Route::get('/user', function (Request $request) {
         return $request->user();
     });
