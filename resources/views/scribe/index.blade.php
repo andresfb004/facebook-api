@@ -152,7 +152,7 @@
     </ul>
 
     <ul class="toc-footer" id="last-updated">
-        <li>Última actualización: 15/10/2026</li>
+        <li>Última actualización: 16/10/2026</li>
     </ul>
 </div>
 
@@ -162,7 +162,7 @@
         <h1 id="introduction">Introduction</h1>
 <p>API REST tipo Facebook construida con Laravel: publicaciones con imágenes, comentarios, likes por usuario, búsqueda y autenticación con Sanctum.</p>
 <aside>
-    <strong>Base URL</strong>: <code>http://127.0.0.1:8000</code>
+    <strong>Base URL</strong>: <code>{{ config("app.url") }}</code>
 </aside>
 <pre><code>Esta documentación describe cada endpoint de la API: método, URL, parámetros, body y respuestas posibles.
 
@@ -1244,7 +1244,7 @@ para poder adjuntar varias imágenes en el campo <code>images[]</code>.</p>
     --header "Accept: application/json" \
     --form "title=Mi primera publicación"\
     --form "content=Hola a todos, comparto fotos de mi viaje"\
-    --form "images[]=@/private/var/folders/18/8qp9ldg10v34b3cxmbm68jk80000gn/T/phpctph8duje6399iglEiR" </code></pre></div>
+    --form "images[]=@/private/var/folders/18/8qp9ldg10v34b3cxmbm68jk80000gn/T/phpunpnglg9b6vgeRNW5P4" </code></pre></div>
 
 
 <div class="javascript-example">

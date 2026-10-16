@@ -3,7 +3,7 @@
 API REST tipo Facebook construida con Laravel: publicaciones con imágenes, comentarios, likes por usuario, búsqueda y autenticación con Sanctum.
 
 <aside>
-    <strong>Base URL</strong>: <code>http://127.0.0.1:8000</code>
+    <strong>Base URL</strong>: <code>{{ config("app.url") }}</code>
 </aside>
 
     Esta documentación describe cada endpoint de la API: método, URL, parámetros, body y respuestas posibles.
